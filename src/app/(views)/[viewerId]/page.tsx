@@ -1,8 +1,7 @@
 "use client";
-import { URLSearchParams } from "node:url";
+import { useParams } from "next/navigation";
 import { UUID } from "node:crypto";
 import React, { useEffect } from "react";
-import { useParams } from "next/navigation";
 
 import { UrlMappingResponse } from "../../lib/models/UrlMappingResponse";
 

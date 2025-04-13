@@ -1,5 +1,5 @@
-import { Sequelize } from "sequelize";
 import pg from "pg";
+import { Sequelize } from "sequelize";
 
 import { config } from "../config";
 
