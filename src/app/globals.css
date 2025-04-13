@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@layer base {
+    :root {
+        margin: 0;
+        padding: 0;
+    }
+
+    .viewer-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        min-width: 100vw;
+        overflow: hidden;
+    }
+
+    .viewer-wrapper iframe {
+        min-height: inherit;
+        min-width: inherit;
+    }
+
+    .default {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        min-width: 100vw;
+    }
+}
