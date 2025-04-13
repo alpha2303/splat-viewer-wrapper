@@ -1,14 +1,14 @@
 import { UUID } from "crypto";
-import { QueryTypes } from "sequelize";
 import { NextResponse } from "next/server";
+import { QueryTypes } from "sequelize";
 
-import { databasePool, DatabasePool } from "../../../../lib/db/DatabasePool";
 import { config } from "../../../../lib/config";
+import { databasePool } from "../../../../lib/db/DatabasePool";
 import { UrlMappingResponse } from "../../../../lib/models/UrlMappingResponse";
 
 export async function GET(
   request: Request,
-  { params }: { params: { mapId: UUID } },
+  { params }: { params: Promise<{ mapId: UUID }> },
 ) {
   try {
     const { mapId } = await params;
@@ -39,7 +39,7 @@ export async function GET(
     return new NextResponse(
       JSON.stringify({
         viewer_url: viewerURL.toString(),
-      }),
+      } satisfies UrlMappingResponse),
       { status: 200 },
     );
   } catch (error) {
