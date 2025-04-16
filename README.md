@@ -1,2 +1,2 @@
-# splat-viewer-wrapper
-Next.js viewer wrapper for displaying splats.
+# splat-viewer-service
+Next.js service for viewing splats.

@@ -4,7 +4,7 @@ import { QueryTypes } from "sequelize";
 
 import { config } from "../../../../lib/config";
 import { databasePool } from "../../../../lib/db/DatabasePool";
-import { UrlMappingResponse } from "../../../../lib/models/UrlMappingResponse";
+import { UrlMappingResponse } from "../../../../lib/definitions/UrlMappingResponse";
 
 export async function GET(
   request: Request,
@@ -12,6 +12,9 @@ export async function GET(
 ) {
   try {
     const { mapId } = await params;
+    if (!mapId) {
+      return new Response("Mapping ID not provided.", { status: 400 });
+    }
     const results = await databasePool.client.query(
       "SELECT key FROM assets WHERE id = $1 AND type = 'viewer' LIMIT 1",
       { bind: [mapId], type: QueryTypes.SELECT },
@@ -32,15 +35,12 @@ export async function GET(
       `${config.AWS_S3_CLOUDFRONT_URL}/${key}/scene.compressed.ply`,
     );
 
-    const viewerURL: URL = new URL(
-      `${config.AWS_S3_CLOUDFRONT_URL}/dev/dist/index.html?settings=${settingsURL}&content=${contentURL}`,
-    );
-
     return new NextResponse(
       JSON.stringify({
-        viewer_url: viewerURL.toString(),
+        settings_url: settingsURL,
+        content_url: contentURL,
       } satisfies UrlMappingResponse),
-      { status: 200 },
+      { status: 200, headers: { "Content-Type": "application/json" } },
     );
   } catch (error) {
     console.error(error);
